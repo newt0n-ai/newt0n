@@ -1,0 +1,17 @@
+{
+  "name": "newt0n-client-example",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@x402/evm": "^2.10.0",
+    "@x402/fetch": "^2.10.0",
+    "viem": "^2.48.0"
+  }
+}
