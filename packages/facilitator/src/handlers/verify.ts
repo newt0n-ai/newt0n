@@ -18,12 +18,12 @@ verifyHandler.post(
 
     const resolvedPaymentPayload = parsePaymentPayload(paymentPayload);
     if (!resolvedPaymentPayload.success)
-      return c.json(resolvedPaymentPayload.error);
+      return c.json(resolvedPaymentPayload.error, 400);
 
     const resolvedPaymentRequirements =
       parsePaymentRequirements(paymentRequirements);
     if (!resolvedPaymentRequirements.success)
-      return c.json(resolvedPaymentRequirements.error);
+      return c.json(resolvedPaymentRequirements.error, 400);
 
     return {
       paymentPayload: resolvedPaymentPayload.data,
