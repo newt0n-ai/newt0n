@@ -27,12 +27,12 @@ export const x402FacilitatorClient = () =>
 
     const mainnetClient = createZeroGWalletClient(
       zeroGMainnetNetworkId,
-      c.env["0G_MAINNET_RPC_URL"],
+      c.env.ZEROG_MAINNET_RPC_URL,
       signer
     );
     const testnetClient = createZeroGWalletClient(
       zeroGTestnetNetworkId,
-      c.env["0G_TESTNET_RPC_URL"],
+      c.env.ZEROG_TESTNET_RPC_URL,
       signer
     );
 
