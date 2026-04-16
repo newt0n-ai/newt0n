@@ -39,8 +39,6 @@ settleHandler.post(
         paymentRequirements as PaymentRequirements
       );
 
-      console.log({ settleResponse });
-
       return c.json(settleResponse, 200);
     } catch (err) {
       console.error(err);
