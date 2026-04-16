@@ -41,7 +41,9 @@ settleHandler.post(
 
       return c.json(settleResponse, 200);
     } catch (err) {
-      console.error(err);
+      console.error({
+        error: err instanceof Error ? err.name : "UnknownError",
+      });
 
       return c.json(internalServerError, 500);
     }

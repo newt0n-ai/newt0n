@@ -9,7 +9,9 @@ supportedHandler.get("/", async (c) => {
   try {
     return c.json(c.var.X402_FACILITATOR.getSupported());
   } catch (err) {
-    console.error(err);
+    console.error({
+      error: err instanceof Error ? err.name : "UnknownError",
+    });
 
     return c.json(internalServerError, 500);
   }
