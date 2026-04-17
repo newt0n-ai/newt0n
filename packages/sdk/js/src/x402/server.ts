@@ -19,6 +19,20 @@ export const DEFAULT_STABLECOINS: DefaultStablecoins = {
   },
 };
 
+export const convertToTokenAmount = (
+  decimalAmount: string,
+  decimals: number
+) => {
+  const amount = parseFloat(decimalAmount);
+  if (Number.isNaN(amount)) {
+    throw new Error(`Invalid amount: ${decimalAmount}`);
+  }
+  const [intPart, decPart = ""] = String(amount).split(".");
+  const paddedDec = decPart.padEnd(decimals, "0").slice(0, decimals);
+  const tokenAmount = (intPart + paddedDec).replace(/^0+/, "") || "0";
+  return tokenAmount;
+};
+
 export class ExactEvmScheme extends X402ExactEvmScheme {
   constructor() {
     super();
@@ -27,9 +41,10 @@ export class ExactEvmScheme extends X402ExactEvmScheme {
       const assetInfo = DEFAULT_STABLECOINS[network];
       if (!assetInfo) return null;
 
-      const tokenAmount = Math.floor(
-        amount * 10 ** assetInfo.decimal
-      ).toString();
+      const tokenAmount = convertToTokenAmount(
+        amount.toString(),
+        assetInfo.decimal
+      );
 
       const includeEip712Domain =
         !assetInfo.assetTransferMethod || assetInfo.supportsEip2612;

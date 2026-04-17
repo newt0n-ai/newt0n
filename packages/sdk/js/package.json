@@ -28,13 +28,19 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsup",
     "typecheck": "tsc --noEmit"
   },
   "exports": {
     "./x402/server": {
-      "import": "./dist/x402/server.js",
-      "types": "./dist/x402/server.d.ts"
+      "import": {
+        "types": "./dist/esm/x402/server.d.ts",
+        "default": "./dist/esm/x402/server.js"
+      },
+      "require": {
+        "types": "./dist/cjs/x402/server.d.ts",
+        "default": "./dist/cjs/x402/server.js"
+      }
     }
   },
   "files": [
@@ -47,6 +53,8 @@
     "typescript": "catalog:"
   },
   "dependencies": {
-    "@x402/evm": "2.10.0"
+    "@x402/core": "2.10.0",
+    "@x402/evm": "2.10.0",
+    "tsup": "8.5.1"
   }
 }
