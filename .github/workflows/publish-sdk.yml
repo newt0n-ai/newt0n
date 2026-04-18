@@ -98,7 +98,7 @@ jobs:
         with:
           node-version: "22"
           registry-url: "https://npm.pkg.github.com"
-          scope: "@newt0n-ai"
+          scope: "@spaceobject"
       - run: npm publish
         working-directory: packages/sdk/js
         env:

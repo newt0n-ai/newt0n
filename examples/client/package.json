@@ -1,5 +1,5 @@
 {
-  "name": "newt0n-client-example",
+  "name": "spaceobject-client-example",
   "module": "index.ts",
   "type": "module",
   "private": true,

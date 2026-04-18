@@ -17,7 +17,7 @@ app.use(logger()).use(trimTrailingSlash()).use(cors());
 
 app.get("/", (c) =>
   c.json({
-    title: "newt0n — 0G x402 facilitator",
+    title: "spaceobject — 0G x402 facilitator",
     availableEndpoints: [
       "/verify - Verify a transaction",
       "/settle - Settle a transaction",

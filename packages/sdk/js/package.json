@@ -1,21 +1,21 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@newt0n-ai/sdk",
+  "name": "@spaceobject/sdk",
   "type": "module",
   "version": "0.1.2",
-  "description": "JavaScript SDK for the newt0n protocol",
+  "description": "JavaScript SDK for the spaceobject protocol",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/newt0n-ai/newt0n.git",
+    "url": "git+https://github.com/spaceobject-xyz/spaceobject.git",
     "directory": "packages/sdk/js"
   },
-  "homepage": "https://github.com/newt0n-ai/newt0n#readme",
+  "homepage": "https://github.com/spaceobject-xyz/spaceobject#readme",
   "bugs": {
-    "url": "https://github.com/newt0n-ai/newt0n/issues"
+    "url": "https://github.com/spaceobject-xyz/spaceobject/issues"
   },
   "keywords": [
-    "newt0n",
+    "spaceobject",
     "x402",
     "sdk",
     "0g",
