@@ -9,7 +9,7 @@ const app = new Hono();
 const evmAddress = "0xYourEvmAddress";
 
 const facilitatorClient = new HTTPFacilitatorClient({
-  url: "https://facilitator.spaceobject.ai",
+  url: "https://facilitator.spaceobject.xyz",
 });
 
 app.use(logger());
