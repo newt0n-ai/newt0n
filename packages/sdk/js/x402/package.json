@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/package.json",
   "name": "@spaceobject/x402",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "JavaScript SDK for the integrating x402 on 0G chain",
   "license": "MIT",
   "repository": {
