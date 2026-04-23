@@ -1,10 +1,10 @@
-import type { Hex } from "viem";
+import type { Address, Hex } from "viem";
 import { x402Facilitator } from "@x402/core/facilitator";
 import { createMiddleware } from "hono/factory";
 import { privateKeyToAccount } from "viem/accounts";
 
 import type { Env } from "../env";
-import type { EvmChainId } from "../lib/chains/evm";
+import type { EvmChainId, EvmWalletClient } from "../lib/chains/evm";
 import { createEvmWalletClient, SUPPORTED_EVM_CHAINS } from "../lib/chains/evm";
 import {
   registerEvmExactScheme,
@@ -14,6 +14,8 @@ import { createEvmFacilitatorSigner } from "../lib/x402/signer";
 
 export type X402FacilitatorClientVariables = {
   X402_FACILITATOR: x402Facilitator;
+  X402_ROUTER_ADDRESS: Address;
+  X402_WALLET_CLIENTS: Partial<Record<EvmChainId, EvmWalletClient>>;
 };
 
 const RPC_URL_BY_CHAIN: Record<EvmChainId, keyof CloudflareBindings> = {
@@ -29,6 +31,7 @@ export const x402FacilitatorClient = () =>
     const facilitator = new x402Facilitator();
 
     const signer = privateKeyToAccount(c.env.FACILITATOR_PRIVATE_KEY as Hex);
+    const walletClients: Partial<Record<EvmChainId, EvmWalletClient>> = {};
 
     for (const chainId of Object.keys(SUPPORTED_EVM_CHAINS) as EvmChainId[]) {
       const rpcUrlKey = RPC_URL_BY_CHAIN[chainId];
@@ -37,6 +40,8 @@ export const x402FacilitatorClient = () =>
       if (!rpcUrl) continue;
 
       const client = createEvmWalletClient(chainId, rpcUrl, signer);
+      walletClients[chainId] = client;
+
       const facilitatorSigner = createEvmFacilitatorSigner(client);
 
       registerEvmExactScheme(facilitator, chainId, facilitatorSigner);
@@ -44,6 +49,8 @@ export const x402FacilitatorClient = () =>
     }
 
     c.set("X402_FACILITATOR", facilitator);
+    c.set("X402_ROUTER_ADDRESS", signer.address);
+    c.set("X402_WALLET_CLIENTS", walletClients);
 
     return next();
   });
