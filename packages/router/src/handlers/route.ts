@@ -33,9 +33,8 @@ routeHandler.all(
     const x402Server = c.get("X402_SERVER");
     const { url } = c.req.valid("query");
 
-    const proxyResponse = await proxy(url, {
-      headers: c.req.header(),
-    });
+    const proxyResponse = await proxy(url, c.req);
+    if (proxyResponse.ok) return proxyResponse;
 
     if (!proxyResponse.ok && proxyResponse.status !== 402) return proxyResponse;
 
@@ -50,26 +49,45 @@ routeHandler.all(
     return paymentMiddleware(
       {
         accepts: SUPPORTED_NETWORKS.reduce((acc, network) => {
-          const dstPayment = paymentRequired.accepts.find(
+          const exact = paymentRequired.accepts.find(
             (accept) => accept.scheme === "exact" && accept.network === network
           );
-          if (!dstPayment) return acc;
+          if (exact)
+            acc.push({
+              scheme: "exact",
+              network,
+              payTo: c.env[PAY_TO_ENV_MAPPING[network]],
+              price: {
+                asset: exact.asset,
+                amount: exact.amount,
+                extra: exact.extra,
+              },
+              maxTimeoutSeconds: exact.maxTimeoutSeconds,
+              extra: exact.extra,
+            });
 
-          acc.push({
-            scheme: "exact",
-            network,
-            payTo: c.env[PAY_TO_ENV_MAPPING[network]],
-            price: {
-              asset: dstPayment.asset,
-              amount: dstPayment.amount,
-              extra: dstPayment.extra,
-            },
-            maxTimeoutSeconds: dstPayment.maxTimeoutSeconds,
-            extra: dstPayment.extra,
-          });
+          const upto = paymentRequired.accepts.find(
+            (accept) => accept.scheme === "upto" && accept.network === network
+          );
+          if (upto)
+            acc.push({
+              scheme: "upto",
+              network,
+              payTo: c.env[PAY_TO_ENV_MAPPING[network]],
+              price: {
+                asset: upto.asset,
+                amount: upto.amount,
+                extra: upto.extra,
+              },
+              maxTimeoutSeconds: upto.maxTimeoutSeconds,
+              extra: upto.extra,
+            });
 
           return acc;
         }, [] as PaymentOption[]),
+        description: paymentRequired.resource.description,
+        mimeType: paymentRequired.resource.mimeType,
+        resource: paymentRequired.resource.url,
       },
       x402Server
     )(c, next);
@@ -82,7 +100,7 @@ routeHandler.all(
 
       const { url } = c.req.valid("query");
 
-      const response = await fetchWithPayment(url);
+      const response = await fetchWithPayment(url, c.req.raw);
 
       return response;
     } catch (err) {
