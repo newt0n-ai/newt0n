@@ -7,9 +7,11 @@ import { ExactEvmScheme } from "@spaceobject/x402/server";
 
 const app = new Hono();
 const evmAddress = process.env.ZEROG_RECIPIENT_ADDRESS!;
+const facilitatorUrl =
+  process.env.FACILITATOR_URL ?? "https://facilitator.spaceobject.xyz";
 
 const facilitatorClient = new HTTPFacilitatorClient({
-  url: "https://facilitator.spaceobject.xyz",
+  url: facilitatorUrl,
 });
 
 app.use(logger());
