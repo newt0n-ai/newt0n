@@ -8,6 +8,7 @@ import { createMiddleware } from "hono/factory";
 
 import type { Env } from "../env";
 import { SUPPORTED_NETWORKS } from "../config/chains";
+import { createRouterExtension } from "../lib/x402/router-extension";
 
 export type X402ServerVariables = {
   X402_SERVER: X402Server;
@@ -24,6 +25,8 @@ export const x402ServerMiddleware = () =>
       x402Server.register(network, new ExactEvmScheme());
       x402Server.register(network, new UptoEvmScheme());
     });
+
+    x402Server.registerExtension(createRouterExtension());
 
     c.set("X402_SERVER", x402Server);
 
