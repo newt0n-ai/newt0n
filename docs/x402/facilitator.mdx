@@ -5,9 +5,11 @@ description: The Herald Protocol facilitator for x402 on 0G Chain.
 
 The Herald Protocol facilitator is a hosted x402 facilitator for 0G Chain. It's the glue between sellers and the chain: sellers forward signed payment payloads to it, and the facilitator verifies them, submits them to 0G, and reports back the result.
 
-<Card title="https://facilitator.heraldprotocol.xyz" icon="link" href="https://facilitator.heraldprotocol.xyz">
-  Production endpoint. Free to use. Drop-in compatible with the x402 spec.
-</Card>
+```
+https://facilitator.heraldprotocol.xyz
+```
+
+Production endpoint. Free to use. Drop-in compatible with the x402 spec.
 
 ## What it does
 
@@ -66,4 +68,4 @@ On `/settle`, the facilitator broadcasts the authorization to 0G, waits for the 
 
 ## Running your own
 
-The facilitator is open source under [`packages/facilitator`](https://github.com/heraldprotocol-xyz/heraldprotocol/tree/main/packages/facilitator). You can self-host on Cloudflare Workers (the default target) or any Node-compatible runtime. Most integrators should use the hosted endpoint.
+The facilitator is open source under [`packages/facilitator`](https://github.com/heraldprotocol/protocol/tree/main/packages/facilitator). You can self-host on Cloudflare Workers (the default target) or any Node-compatible runtime. Most integrators should use the hosted endpoint.

@@ -6,7 +6,7 @@
   <p align="center">
     <a href="https://heraldprotocol.xyz/"><img alt="Website" src="https://img.shields.io/badge/website-heraldprotocol.xyz-1a1a1a" /></a>
     <a href="https://docs.heraldprotocol.xyz/"><img alt="Docs" src="https://img.shields.io/badge/docs-read%20the%20docs-blue" /></a>
-    <a href="https://x.com/heraldprotocol_xyz"><img alt="X" src="https://img.shields.io/twitter/follow/heraldprotocol_xyz" /></a>
+    <a href="https://x.com/herald_protocol"><img alt="X" src="https://img.shields.io/twitter/follow/herald_protocol" /></a>
   </p>
 </div>
 
@@ -49,4 +49,4 @@ Not every service accepts payment on 0G. The **Herald Router** bridges that gap:
 
 - Website: https://heraldprotocol.xyz
 - Docs: https://docs.heraldprotocol.xyz
-- X: https://x.com/heraldprotocol_xyz
+- X: https://x.com/herald_protocol

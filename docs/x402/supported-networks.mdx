@@ -1,9 +1,9 @@
 ---
 title: Supported Networks
-description: 0G networks, tokens, and scheme coverage for the Herald Protocol facilitator.
+description: Networks, tokens, and scheme coverage for the Herald Protocol facilitator.
 ---
 
-The Herald Protocol facilitator supports the following 0G networks and tokens. Network identifiers follow [CAIP-2](https://chainagnostic.org/CAIPs/caip-2).
+The Herald Protocol facilitator supports the following networks and tokens. Network identifiers follow [CAIP-2](https://chainagnostic.org/CAIPs/caip-2).
 
 ## Networks
 
@@ -11,6 +11,8 @@ The Herald Protocol facilitator supports the following 0G networks and tokens. N
 | --- | --- | --- |
 | 0G Mainnet | `eip155:16661` | Live |
 | 0G Galileo Testnet | `eip155:16602` | Live |
+| Base Mainnet | `eip155:8453` | Live |
+| Base Sepolia | `eip155:84532` | Live |
 
 ## Tokens
 
@@ -18,6 +20,8 @@ The Herald Protocol facilitator supports the following 0G networks and tokens. N
 | --- | --- | --- | --- | --- |
 | `eip155:16661` | Bridged USDC | USDC.e | `0x1f3aa82227281ca364bfb3d253b0f1af1da6473e` | 6 |
 | `eip155:16602` | — | — | — | — |
+| `eip155:8453` | USD Coin | USDC | `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913` | 6 |
+| `eip155:84532` | USD Coin | USDC | `0x036CbD53842c5426634e7929541eC2318f3dCF7e` | 6 |
 
 <Note>
   0G testnet has no official stablecoin yet. A Herald Protocol EIP-3009-compatible test token is on the roadmap so the dev loop works end-to-end without a mainnet wallet.
@@ -33,7 +37,7 @@ Swap for USDC.e via the official 0G bridge:
 
 ## Schemes
 
-Both EVM schemes defined by x402 are registered on every supported 0G network:
+Both EVM schemes defined by x402 are registered on every supported network:
 
 - **exact** — the buyer authorizes and pays the advertised price.
 - **upto** — the buyer authorizes a maximum; the seller settles for the actual usage.
@@ -42,7 +46,7 @@ Use [`GET /supported`](https://facilitator.heraldprotocol.xyz/supported) to quer
 
 ## Pricing in USD
 
-When you use `ExactEvmScheme` from `@heraldprotocol/x402/server`, you can price endpoints in USD strings like `"$0.001"`. The scheme resolves the amount against the default stablecoin for the declared network — no hardcoded decimals or token addresses required.
+When you use `ExactEvmScheme` from `@heraldprotocol/x402/server`, you can price endpoints in USD strings like `"$0.001"`. For Base and Arbitrum, the upstream `@x402/evm` library resolves the amount natively. For 0G Mainnet, Herald Protocol extends this with a parser that maps to Bridged USDC at the correct address — no hardcoded decimals or token addresses required.
 
 ```ts
 import { ExactEvmScheme } from "@heraldprotocol/x402/server";

@@ -7,12 +7,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/heraldprotocol-xyz/heraldprotocol.git",
+    "url": "git+https://github.com/heraldprotocol/protocol.git",
     "directory": "packages/sdk/js/x402"
   },
-  "homepage": "https://github.com/heraldprotocol-xyz/heraldprotocol#readme",
+  "homepage": "https://github.com/heraldprotocol/protocol#readme",
   "bugs": {
-    "url": "https://github.com/heraldprotocol-xyz/heraldprotocol/issues"
+    "url": "https://github.com/heraldprotocol/protocol/issues"
   },
   "keywords": [
     "heraldprotocol",

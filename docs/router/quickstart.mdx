@@ -1,0 +1,117 @@
+---
+title: Quickstart
+description: Pay a cross-chain x402 endpoint from 0G using the Herald Router.
+---
+
+This guide shows how to call an x402-protected endpoint on any supported chain using the Herald Router. Your agent only needs a wallet on 0G — the router handles settlement on the destination chain.
+
+## Prerequisites
+
+- A 0G-compatible EVM private key
+- A funded wallet on 0G Mainnet (USDC.e — swap via [hub.0g.ai](https://hub.0g.ai/swap?network=mainnet))
+- Node.js 18+ or Bun
+
+## 1. Install dependencies
+
+<CodeGroup>
+
+```bash npm
+npm install @x402/core @x402/evm @x402/fetch viem
+```
+
+```bash pnpm
+pnpm add @x402/core @x402/evm @x402/fetch viem
+```
+
+```bash bun
+bun add @x402/core @x402/evm @x402/fetch viem
+```
+
+</CodeGroup>
+
+## 2. Create a signer
+
+```ts client.ts
+import { privateKeyToAccount } from "viem/accounts";
+
+const signer = privateKeyToAccount(
+  process.env.EVM_PRIVATE_KEY as `0x${string}`
+);
+```
+
+## 3. Register the 0G scheme and wrap fetch
+
+Register only 0G Mainnet — that is the only chain your agent pays on. The router handles whatever chain the destination requires.
+
+```ts client.ts
+import { x402Client } from "@x402/core/client";
+import { ExactEvmScheme } from "@x402/evm/exact/client";
+import { wrapFetchWithPayment } from "@x402/fetch";
+
+const client = new x402Client();
+client.register("eip155:16661", new ExactEvmScheme(signer));
+
+const fetchWithPayment = wrapFetchWithPayment(fetch, client);
+```
+
+## 4. Call a service through the router
+
+Pass the destination URL as the `url` query parameter on the router endpoint. The wrapper handles the 402 round-trip automatically.
+
+```ts client.ts
+const ROUTER_URL = "https://router.heraldprotocol.xyz/route";
+const destination = "https://some-x402-api.example.com/data";
+
+const response = await fetchWithPayment(
+  `${ROUTER_URL}?url=${encodeURIComponent(destination)}`
+);
+
+const data = await response.json();
+console.log("Response:", data);
+```
+
+That's all. The agent signs a payment on 0G; the router pays the destination on its chain and passes the response back.
+
+## 5. Read the settlement receipt (optional)
+
+The router forwards the destination's settlement result in the `X-PAYMENT-RESPONSE` header.
+
+```ts client.ts
+if (response.ok) {
+  const { x402HTTPClient } = await import("@x402/core/client");
+  const httpClient = new x402HTTPClient(client);
+  const paymentResponse = httpClient.getPaymentSettleResponse((name) =>
+    response.headers.get(name)
+  );
+  console.log("Payment settled:", paymentResponse);
+}
+```
+
+## How the payment flows
+
+1. `fetchWithPayment` sends the request to `https://router.heraldprotocol.xyz/route?url=<destination>`.
+2. The router proxies to the destination and gets a `402` response.
+3. The router re-presents the payment requirements to your client, mapped to 0G.
+4. `fetchWithPayment` signs a 0G payment and retries with `X-PAYMENT`.
+5. The router settles the inbound payment on 0G, then pays the destination on its chain using the router's own wallet.
+6. The router returns the destination's response to your client.
+
+## Supported destination chains
+
+| Destination | CAIP-2 ID |
+| --- | --- |
+| 0G Mainnet | `eip155:16661` |
+| Base Mainnet | `eip155:8453` |
+
+Your agent always pays from 0G Mainnet — the destination chain is transparent to your client code.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Router Overview" icon="route" href="/router/overview">
+    How the router works end to end.
+  </Card>
+  <Card title="Quickstart for Sellers" icon="server" href="/x402/quickstart-for-sellers">
+    Expose your own x402-protected endpoint.
+  </Card>
+</CardGroup>

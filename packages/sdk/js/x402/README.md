@@ -1,6 +1,6 @@
 # @heraldprotocol/x402
 
-JavaScript SDK for the [heraldprotocol](https://github.com/heraldprotocol-xyz/heraldprotocol) x402 protocol on the 0G network.
+JavaScript SDK for the [heraldprotocol](https://github.com/heraldprotocol/protocol) x402 protocol on the 0G network.
 
 ## Installation
 

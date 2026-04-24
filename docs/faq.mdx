@@ -1,11 +1,11 @@
 ---
 title: FAQ
-description: Common questions about Herald Protocol and the 0G x402 facilitator.
+description: Common questions about Herald Protocol, the 0G x402 facilitator, and the cross-chain router.
 ---
 
 <AccordionGroup>
   <Accordion title="What is Herald Protocol?">
-    Herald Protocol is the agent discovery and trust layer for 0G Chain. Today it ships an x402 facilitator so any API, MCP server, or agent can accept onchain payments on 0G.
+    Herald Protocol is the infrastructure for the agentic economy on 0G Chain. It ships an x402 facilitator so any API, MCP server, or agent can accept onchain payments on 0G, and a cross-chain payment router so agents holding funds on 0G can pay services on other chains without managing multiple wallets.
   </Accordion>
 
   <Accordion title="What is x402?">
@@ -16,7 +16,7 @@ description: Common questions about Herald Protocol and the 0G x402 facilitator.
     No. Point your server at `https://facilitator.heraldprotocol.xyz` and you're done. The facilitator is free to use and drop-in compatible with the x402 spec.
   </Accordion>
 
-  <Accordion title="Which networks are supported?">
+  <Accordion title="Which networks are supported for the facilitator?">
     0G Mainnet (`eip155:16661`) and 0G Galileo Testnet (`eip155:16602`). See [Supported networks](/x402/supported-networks).
   </Accordion>
 
@@ -32,7 +32,23 @@ description: Common questions about Herald Protocol and the 0G x402 facilitator.
     Yes. The facilitator implements the standard `/verify`, `/settle`, and `/supported` endpoints, so any x402-compatible client or server library works. On the seller side, `@heraldprotocol/x402` wraps `@x402/evm` with 0G-aware money parsing so you can price endpoints in USD.
   </Accordion>
 
+  <Accordion title="What is the Herald Router?">
+    The Herald Router is a hosted proxy at `https://router.heraldprotocol.xyz` that lets agents holding funds on 0G pay any x402-protected service on another supported chain. The agent pays the router on 0G; the router pays the destination using its own wallet on the target chain. No bridging, no multi-chain wallet management. See [Router Overview](/router/overview).
+  </Accordion>
+
+  <Accordion title="Which chains does the router support?">
+    Currently 0G Mainnet (`eip155:16661`) and Base Mainnet (`eip155:8453`). The agent always pays from 0G; the router settles on whichever chain the destination service requires.
+  </Accordion>
+
+  <Accordion title="Does the router hold funds?">
+    The router holds pre-funded wallets on each supported destination chain to settle outbound payments. Your agent sends payment to the router on 0G; the router bridges that value by paying the destination on your behalf from its own wallet.
+  </Accordion>
+
   <Accordion title="What's on the roadmap?">
-    Permit2 gas sponsoring (accept any ERC-20, no native token required from the payer), ERC-8004 on 0G (identity, reputation, validation), and INFT (ERC-7857) × ERC-8004 composition.
+    - **Permit2 gas sponsoring** — accept any ERC-20 as payment, no native token required from the payer
+    - **More payment rails** — additional settlement protocols beyond x402
+    - **EIP-3009 test token on 0G** — unblock the dev loop until an official USDC testnet lands
+    - **[mpp](https://mpp.dev) support** — native integration with the machine payment protocol for broader agent-to-agent payment interoperability
+    - **ERC-8004 on 0G** — identity, reputation, and validation for agents
   </Accordion>
 </AccordionGroup>

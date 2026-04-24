@@ -1,13 +1,24 @@
 ---
 title: Introduction
-description: Herald Protocol is the agent discovery and trust layer for 0G Chain.
+description: Herald Protocol is the infrastructure for the agentic economy on 0G Chain.
 ---
 
-Herald Protocol ships the infrastructure for open-ended agent economies on [0G Chain](https://0g.ai) — where AI agents can be found, evaluated, and paid without pre-existing trust.
+Herald Protocol ships the economic rails for agent-native apps on [0G Chain](https://0g.ai) — so AI agents can pay and get paid without humans in the loop.
 
 ## What's live today
 
-**x402 on 0G.** Any API, MCP server, or AI agent can accept payments directly on 0G via [x402](https://x402.org) through the Herald Protocol facilitator. No middlemen, no off-chain escrow — just HTTP with onchain settlement.
+<CardGroup cols={2}>
+  <Card title="x402 on 0G" icon="bolt" href="/x402/overview">
+    Any API, MCP server, or AI agent can accept onchain payments on 0G via x402 — no middlemen, no off-chain escrow.
+  </Card>
+  <Card title="Cross-Chain Router" icon="route" href="/router/overview">
+    Agents hold funds on 0G and pay any x402-protected service across supported chains. One wallet, multiple destinations.
+  </Card>
+</CardGroup>
+
+## x402 payments
+
+**Agent payments are live on 0G Mainnet**, powered by [x402](https://x402.org). Any API, MCP server, or AI agent can accept payments through the Herald Protocol facilitator — drop-in compatible with the x402 spec.
 
 <CardGroup cols={2}>
   <Card title="Quickstart for Sellers" icon="server" href="/x402/quickstart-for-sellers">
@@ -24,12 +35,30 @@ Herald Protocol ships the infrastructure for open-ended agent economies on [0G C
   </Card>
 </CardGroup>
 
+## Cross-Chain Router
+
+**Agents hold funds on 0G and pay any x402-protected service across supported routes** — without juggling multiple chains or bridging manually. The router exposes a single endpoint; agents use the same x402 interface they already know.
+
+<CardGroup cols={2}>
+  <Card title="Router Overview" icon="route" href="/router/overview">
+    How the cross-chain router works.
+  </Card>
+  <Card title="Router Quickstart" icon="play" href="/router/quickstart">
+    Make a cross-chain x402 payment from 0G in minutes.
+  </Card>
+</CardGroup>
+
 ## Why 0G?
 
-0G is an EVM-compatible L1 with sub-second finality, decentralized storage, and a compute marketplace — a natural home for agent-native apps. Herald Protocol makes those agents discoverable, trustable, and monetizable from day one.
+0G is an EVM-compatible L1 with sub-second finality, decentralized storage, and a compute marketplace — a natural home for agent-native apps. Herald Protocol gives those agents the economic rails to transact and get paid from day one.
 
-## Facilitator
+## Hosted endpoints
 
-<Card title="https://facilitator.heraldprotocol.xyz" icon="link" href="https://facilitator.heraldprotocol.xyz">
-  Drop-in compatible with the x402 spec. Plug it into any HTTP server or agent client.
-</Card>
+<CardGroup cols={2}>
+  <Card title="https://facilitator.heraldprotocol.xyz" icon="shield-check" href="https://facilitator.heraldprotocol.xyz">
+    x402 facilitator — verifies and settles payments on 0G.
+  </Card>
+  <Card title="https://router.heraldprotocol.xyz" icon="route" href="https://router.heraldprotocol.xyz">
+    Cross-chain payment router — pay from 0G to any supported chain.
+  </Card>
+</CardGroup>

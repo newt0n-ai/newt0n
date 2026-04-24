@@ -28,12 +28,12 @@
         {
           "anchor": "GitHub",
           "icon": "github",
-          "href": "https://github.com/heraldprotocol-xyz/heraldprotocol"
+          "href": "https://github.com/heraldprotocol/protocol"
         },
         {
           "anchor": "X",
           "icon": "x-twitter",
-          "href": "https://x.com/heraldprotocol_xyz"
+          "href": "https://x.com/herald_protocol"
         }
       ]
     },
@@ -51,6 +51,10 @@
           "x402/facilitator",
           "x402/supported-networks"
         ]
+      },
+      {
+        "group": "Router",
+        "pages": ["router/overview", "router/quickstart"]
       }
     ]
   },

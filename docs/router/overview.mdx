@@ -1,0 +1,61 @@
+---
+title: Overview
+description: How the Herald Protocol cross-chain payment router works.
+---
+
+The Herald Router lets agents holding funds on 0G pay any x402-protected service across supported chains — without bridging manually or maintaining wallets on multiple networks.
+
+```
+https://facilitator.heraldprotocol.xyz
+```
+
+Hosted endpoint. One request routes payment from 0G to any supported destination chain.
+
+## The problem it solves
+
+x402 services exist on many chains. An agent that only holds USDC.e on 0G cannot directly pay a service that settles on Base. Bridging manually means juggling multiple wallets, funding them with native tokens for gas, and managing cross-chain state — none of which belongs in an agent's payment logic.
+
+The Herald Router handles all of that transparently. Your agent makes one call; the router handles the rest.
+
+## How it works
+
+<Steps>
+  <Step title="Agent requests a resource via the router">
+    Instead of calling the destination URL directly, the agent calls `GET /route?url=<destination>` on the router.
+  </Step>
+  <Step title="Router proxies the request">
+    The router forwards the request to the destination. If the response is `200 OK`, it passes the response back immediately — no payment needed.
+  </Step>
+  <Step title="Router reads the 402 and re-presents it">
+    If the destination returns `402 Payment Required`, the router reads the payment requirements and re-presents them to the agent mapped to supported networks. The agent sees 0G as the payment option regardless of where the destination settles.
+  </Step>
+  <Step title="Agent pays the router on 0G">
+    The agent signs a payment authorization on 0G (USDC.e, `eip155:16661`) and retries the request with the `X-PAYMENT` header, exactly like any other x402 flow.
+  </Step>
+  <Step title="Router pays the destination on the target chain">
+    Once the router verifies and settles the inbound payment, it calls the destination using its own wallet on the target chain and returns the response to the agent.
+  </Step>
+</Steps>
+
+## Supported routes
+
+| Source chain | Destination chain | Status |
+| --- | --- | --- |
+| 0G Mainnet (`eip155:16661`) | 0G Mainnet (`eip155:16661`) | Live |
+| 0G Mainnet (`eip155:16661`) | Base Mainnet (`eip155:8453`) | Live |
+
+## What the agent needs
+
+- A funded wallet on **0G Mainnet** (USDC.e — swap via [hub.0g.ai](https://hub.0g.ai/swap?network=mainnet))
+- The standard x402 client stack — `@x402/core`, `@x402/evm`, `@x402/fetch`
+- The router URL: `https://router.heraldprotocol.xyz/route?url=<destination>`
+
+The agent never needs wallets on destination chains. The router abstracts that entirely.
+
+## What the router charges
+
+The router applies the destination's payment requirements directly — no additional fee is added on top of the service price. The agent pays exactly what the destination service charges, denominated in 0G USDC.e.
+
+<Card title="Next: make your first routed payment" icon="arrow-right" href="/router/quickstart">
+  Use the router to pay a cross-chain x402 endpoint from 0G.
+</Card>
