@@ -69,27 +69,30 @@ routeHandler.all(
       decodedPaymentRequiredHeader
     );
 
-    const matchingRequirement = paymentRequired.accepts.find((req) =>
-      Object.values(NETWORK_TOKEN_MAPPING).some(
-        (token) => token.address.toLowerCase() === req.asset.toLowerCase()
-      )
-    );
+    const accepts: PaymentOption[] = SUPPORTED_NETWORKS.flatMap((network) => {
+      const token = NETWORK_TOKEN_MAPPING[network];
 
-    if (!matchingRequirement) return proxyResponse;
+      const requirements = paymentRequired.accepts.filter((req) =>
+        Object.keys(NETWORK_TOKEN_MAPPING).includes(req.network)
+      );
 
-    const accepts: PaymentOption[] = SUPPORTED_NETWORKS.map((network) => ({
-      scheme: "exact" as const,
-      network,
-      payTo: c.env[PAY_TO_ENV_MAPPING[network]],
-      price: {
-        asset: NETWORK_TOKEN_MAPPING[network].address,
-        amount: matchingRequirement.amount,
-        extra: {
-          name: NETWORK_TOKEN_MAPPING[network].name,
-          version: NETWORK_TOKEN_MAPPING[network].version,
+      return requirements.map((requirement) => ({
+        scheme: requirement.scheme,
+        network,
+        payTo: c.env[PAY_TO_ENV_MAPPING[network]],
+        price: {
+          asset: token.address,
+          amount: requirement.amount,
+          extra: {
+            ...requirement.extra,
+            name: token.name,
+            version: token.version,
+          },
         },
-      },
-    }));
+      }));
+    });
+
+    if (accepts.length === 0) return proxyResponse;
 
     return paymentMiddleware(
       {
