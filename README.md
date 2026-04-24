@@ -1,7 +1,9 @@
 <div align="center">
-  <img width="50%" height="auto" src="assets/heraldprotocol.png" />
+  <img width="80%" height="auto" src="assets/heraldprotocol.png" />
 
-  <p>
+  <hr/>
+  
+  <p align="center">
     <a href="https://heraldprotocol.xyz/"><img alt="Website" src="https://img.shields.io/badge/website-heraldprotocol.xyz-1a1a1a" /></a>
     <a href="https://docs.heraldprotocol.xyz/"><img alt="Docs" src="https://img.shields.io/badge/docs-read%20the%20docs-blue" /></a>
     <a href="https://x.com/heraldprotocol_xyz"><img alt="X" src="https://img.shields.io/twitter/follow/heraldprotocol_xyz" /></a>
