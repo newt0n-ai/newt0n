@@ -1,9 +1,4 @@
-export const SUPPORTED_EVM_NETWORKS = [
-  "eip155:16661",
-  "eip155:16602",
-  "eip155:8453",
-  "eip155:84532",
-] as const;
+export const SUPPORTED_EVM_NETWORKS = ["eip155:16661", "eip155:8453"] as const;
 export type SupportedEvmNetwork = (typeof SUPPORTED_EVM_NETWORKS)[number];
 
 export const SUPPORTED_NETWORKS = SUPPORTED_EVM_NETWORKS;

@@ -17,9 +17,7 @@ const routeHandler = new Hono<Env>();
 
 export const PAY_TO_ENV_MAPPING = {
   "eip155:16661": "ZEROG_MAINNET_PAY_TO",
-  "eip155:16602": "ZEROG_TESTNET_PAY_TO",
   "eip155:8453": "BASE_MAINNET_PAY_TO",
-  "eip155:84532": "BASE_SEPOLIA_PAY_TO",
 } as const satisfies Record<SupportedNetwork, string>;
 
 type Stablecoin = {
@@ -38,22 +36,10 @@ export const NETWORK_TOKEN_MAPPING = {
     name: "Bridged USDC",
     version: "2",
   },
-  "eip155:16602": {
-    address: "0x1f3aa82227281ca364bfb3d253b0f1af1da6473e",
-    decimal: 6,
-    name: "Bridged USDC",
-    version: "2",
-  },
   "eip155:8453": {
     address: "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
     decimal: 6,
     name: "USD Coin",
-    version: "2",
-  },
-  "eip155:84532": {
-    address: "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
-    decimal: 6,
-    name: "USDC",
     version: "2",
   },
 } as const satisfies Record<SupportedNetwork, Stablecoin>;

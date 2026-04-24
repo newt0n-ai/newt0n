@@ -14,9 +14,7 @@ export type X402ClientVariables = {
 
 export const PRIVATE_KEY_ENV_MAPPING = {
   "eip155:16661": "ZEROG_MAINNET_PRIVATE_KEY",
-  "eip155:16602": "ZEROG_TESTNET_PRIVATE_KEY",
   "eip155:8453": "BASE_MAINNET_PRIVATE_KEY",
-  "eip155:84532": "BASE_SEPOLIA_PRIVATE_KEY",
 } as const satisfies Record<SupportedNetwork, string>;
 
 export const x402ClientMiddleware = () =>
