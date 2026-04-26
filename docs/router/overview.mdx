@@ -30,7 +30,7 @@ The Herald Router handles all of that transparently. Your agent makes one call; 
     If the destination returns `402 Payment Required`, the router reads the payment requirements and re-presents them to the agent mapped to supported networks. The agent sees 0G as the payment option regardless of where the destination settles.
   </Step>
   <Step title="Agent pays the router on 0G">
-    The agent signs a payment authorization on 0G (USDC.e, `eip155:16661`) and retries the request with the `PAYMENT-REQUIRED` header, exactly like any other x402 flow.
+    The agent signs a payment authorization on 0G (USDC.e, `eip155:16661`) and retries the request with the `PAYMENT-SIGNATURE` header, exactly like any other x402 flow.
   </Step>
   <Step title="Router pays the destination on the target chain">
     Once the router verifies and settles the inbound payment, it calls the destination using its own wallet on the target chain and returns the response to the agent.

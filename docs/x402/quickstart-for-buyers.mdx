@@ -66,7 +66,7 @@ const fetchWithPayment = wrapFetchWithPayment(fetch, client);
 
 ## 4. Make a paid request
 
-Call the endpoint as you would any other URL. The wrapper transparently handles the 402 round-trip: it reads payment requirements, signs an authorization, retries the request with `PAYMENT-REQUIRED`, and returns the final response.
+Call the endpoint as you would any other URL. The wrapper transparently handles the 402 round-trip: it reads payment requirements, signs an authorization, retries the request with `PAYMENT-SIGNATURE`, and returns the final response.
 
 ```ts client.ts
 const response = await fetchWithPayment("http://localhost:3000/weather", {
@@ -98,7 +98,7 @@ if (response.ok) {
 
 1. The first request goes out with no payment.
 2. If the server returns `402`, the wrapper parses the `accepts` list and picks an entry matching a registered scheme.
-3. It signs a payment authorization with your signer and retries with the `PAYMENT-REQUIRED` header.
+3. It signs a payment authorization with your signer and retries with the `PAYMENT-SIGNATURE` header.
 4. The server verifies with the Herald Protocol facilitator, returns the body, and includes the settlement result in `PAYMENT-RESPONSE`.
 
 You never talk to the facilitator directly as a buyer — the seller does.
