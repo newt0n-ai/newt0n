@@ -1,3 +1,6 @@
+# deps
+.wrangler
+
 # Output
 .output
 /.svelte-kit
