@@ -63,4 +63,4 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: packages/www
-          command: pages deploy --project-name=herald-www
+          command: pages deploy --branch main --project-name=herald-www
