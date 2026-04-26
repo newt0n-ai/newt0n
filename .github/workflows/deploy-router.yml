@@ -63,4 +63,4 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: packages/router
-          command: deploy --minify --name=herald-worker
+          command: deploy --minify --name=herald-router
