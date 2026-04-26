@@ -6,11 +6,14 @@ import logo from "$lib/assets/logo.png";
 
 onMount(() => {
   const bg = document.querySelector<HTMLElement>("[data-bg-layer]");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const desktopMq = window.matchMedia("(min-width: 768px)");
   let ticking = false;
+
   function update() {
     if (!bg) return;
 
-    if (window.innerWidth < 768) {
+    if (reducedMotion.matches || !desktopMq.matches) {
       bg.style.backgroundPosition = "center 30%";
       ticking = false;
       return;
@@ -29,6 +32,7 @@ onMount(() => {
 
   update();
   window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", update, { passive: true });
 
   const els = document.querySelectorAll("[data-enter]");
   let io: IntersectionObserver | null = null;
@@ -55,6 +59,7 @@ onMount(() => {
 
   return () => {
     window.removeEventListener("scroll", onScroll);
+    window.removeEventListener("resize", update);
     io?.disconnect();
   };
 });
@@ -124,7 +129,7 @@ onMount(() => {
       class="m-0 mb-[1.6rem] font-mono font-bold text-[clamp(2.6rem,11vw,4.5rem)] md:text-[clamp(4rem,8vw,9rem)] leading-[0.98] tracking-[-0.02em] uppercase text-heading"
     >
       Payment infrastructure<br />
-      for <span class="text-[#c596fa]">AI&nbsp;agents</span>
+      for <span class="text-accent">AI&nbsp;agents</span>
     </h1>
   </div>
 
@@ -179,7 +184,7 @@ onMount(() => {
           href="https://0g.ai"
           target="_blank"
           rel="noopener"
-          class="text-[#c596fa] font-bold no-underline border-b border-line transition-[opacity,border-color] duration-120 ease-out hover:opacity-70 active:opacity-50"
+          class="text-accent font-bold no-underline border-b border-line transition-[opacity,border-color] duration-120 ease-out hover:opacity-70 active:opacity-50"
           >0G Chain</a
         >. We provide the settlement primitives that allow AI agents to meter,
         charge, and pay for digital resources at scale.
