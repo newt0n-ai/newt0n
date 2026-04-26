@@ -1,7 +1,9 @@
 <script lang="ts">
 import { onMount } from "svelte";
 
+// biome-ignore lint/correctness/noUnusedImports: used in template
 import background from "$lib/assets/background.webp";
+// biome-ignore lint/correctness/noUnusedImports: used in template
 import logo from "$lib/assets/logo.png";
 
 onMount(() => {

@@ -1,7 +1,8 @@
 <script lang="ts">
-  import "./layout.css";
+import "./layout.css";
 
-  let { children } = $props();
+// biome-ignore lint/correctness/noUnusedVariables: used in template
+let { children } = $props();
 </script>
 
 {@render children()}
