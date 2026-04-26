@@ -17,13 +17,13 @@ Herald Protocol runs a production x402 facilitator for **0G Chain** so sellers a
     If payment is required, the server returns `402 Payment Required` with an `accepts` list describing price, network, token, and recipient.
   </Step>
   <Step title="Client signs a payment">
-    The client picks a payment option it supports, signs a payment authorization (e.g. EIP-3009 `transferWithAuthorization`), and retries the request with the signed payload in the `X-PAYMENT` header.
+    The client picks a payment option it supports, signs a payment authorization (e.g. EIP-3009 `transferWithAuthorization`), and retries the request with the signed payload in the `PAYMENT-REQUIRED` header.
   </Step>
   <Step title="Server verifies with the facilitator">
     The server forwards the payload to `https://facilitator.heraldprotocol.xyz/verify`. The facilitator checks the signature, amount, recipient, and network.
   </Step>
   <Step title="Server returns the resource and settles">
-    On success, the server returns the response and calls `/settle`. The facilitator submits the transaction to 0G, waits for confirmation, and returns the transaction hash in the `X-PAYMENT-RESPONSE` header.
+    On success, the server returns the response and calls `/settle`. The facilitator submits the transaction to 0G, waits for confirmation, and returns the transaction hash in the `PAYMENT-RESPONSE` header.
   </Step>
 </Steps>
 

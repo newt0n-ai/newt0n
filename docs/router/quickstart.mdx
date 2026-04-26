@@ -74,7 +74,7 @@ That's all. The agent signs a payment on 0G; the router pays the destination on 
 
 ## 5. Read the settlement receipt (optional)
 
-The router forwards the destination's settlement result in the `X-PAYMENT-RESPONSE` header.
+The router forwards the destination's settlement result in the `PAYMENT-RESPONSE` header.
 
 ```ts client.ts
 if (response.ok) {
@@ -92,7 +92,7 @@ if (response.ok) {
 1. `fetchWithPayment` sends the request to `https://router.heraldprotocol.xyz/route?url=<destination>`.
 2. The router proxies to the destination and gets a `402` response.
 3. The router re-presents the payment requirements to your client, mapped to 0G.
-4. `fetchWithPayment` signs a 0G payment and retries with `X-PAYMENT`.
+4. `fetchWithPayment` signs a 0G payment and retries with `PAYMENT-REQUIRED`.
 5. The router settles the inbound payment on 0G, then pays the destination on its chain using the router's own wallet.
 6. The router returns the destination's response to your client.
 
